@@ -1,0 +1,10 @@
+C:\Users\justinroyer\source\repos\CIBT-FileReader\CIBT-FileReader\obj\Debug\CIBT-FileReader.csprojAssemblyReference.cache
+C:\Users\justinroyer\source\repos\CIBT-FileReader\CIBT-FileReader\bin\Debug\CIBT-FileReader.exe.config
+C:\Users\justinroyer\source\repos\CIBT-FileReader\CIBT-FileReader\bin\Debug\CIBT-FileReader.exe
+C:\Users\justinroyer\source\repos\CIBT-FileReader\CIBT-FileReader\bin\Debug\CIBT-FileReader.pdb
+C:\Users\justinroyer\source\repos\CIBT-FileReader\CIBT-FileReader\obj\Debug\CIBT-FileReader.exe
+C:\Users\justinroyer\source\repos\CIBT-FileReader\CIBT-FileReader\obj\Debug\CIBT-FileReader.pdb
+C:\Users\justinroyer\source\repos\CIBT-FileReader\CIBT-FileReader\bin\Debug\Microsoft.Data.Tools.Components.dll
+C:\Users\justinroyer\source\repos\CIBT-FileReader\CIBT-FileReader\bin\Debug\Microsoft.Data.Tools.Schema.Sql.UnitTesting.dll
+C:\Users\justinroyer\source\repos\CIBT-FileReader\CIBT-FileReader\bin\Debug\Microsoft.VisualStudio.QualityTools.UnitTestFramework.dll
+C:\Users\justinroyer\source\repos\CIBT-FileReader\CIBT-FileReader\obj\Debug\CIBT-FileReader.csproj.CopyComplete
