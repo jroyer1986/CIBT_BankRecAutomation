@@ -39,7 +39,6 @@ namespace CIBT_FileReader.Services
             {
                 _checkService.ProcessCheck(check);
             }
-
         }
         void ArchiveFile(string fileName)
         {
@@ -48,6 +47,9 @@ namespace CIBT_FileReader.Services
                         Path.GetFileNameWithoutExtension(fileName),
                         DateTime.Now.ToString("yyyyMMdd_hhmmss"),
                         Path.GetExtension(fileName));
+
+            System.IO.FileInfo file = new System.IO.FileInfo(ConfigurationManager.AppSettings["ArchivePath"]);
+            file.Directory.Create(); // If the directory already exists, this method does nothing.
             File.Move(fileName, destFileName);
         }
         IEnumerable<Check> LoadCheckFile(string path)

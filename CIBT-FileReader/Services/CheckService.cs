@@ -22,7 +22,7 @@ namespace CIBT_FileReader.Services
             }
             else
             {
-                LogError(check);
+                LogCheckError(check);
             }
         }
 
@@ -83,7 +83,7 @@ namespace CIBT_FileReader.Services
             catch (Exception ex)
             {
                 //display error message
-                Console.WriteLine("Exception: " + ex.Message);
+                LogError(ex);
             }
 
             return foundRecord;
@@ -147,13 +147,15 @@ namespace CIBT_FileReader.Services
             catch (Exception ex)
             {
                 //display error message
-                Console.WriteLine("Exception: " + ex.Message);
+                LogError(ex);
             }
         }
 
-        public void LogError(Check check)
+        public void LogCheckError(Check check)
         {
-            string filePath = @"C:\Text\logs\ErrorLog.txt";
+            string filePath = SysConfig.ConfigurationManager.AppSettings["PathToErrorLog"].ToString();
+            System.IO.FileInfo file = new System.IO.FileInfo(filePath);
+            file.Directory.Create(); // If the directory already exists, this method does nothing.
 
             Exception ex = new Exception();
 
@@ -164,10 +166,30 @@ namespace CIBT_FileReader.Services
                 writer.WriteLine();
 
 
-                    writer.WriteLine("ERROR");
-                    writer.WriteLine("CHECK ID:"+ check.CheckNumber);
+                writer.WriteLine("ERROR");
+                writer.WriteLine("CHECK ID:"+ check.CheckNumber);
+                writer.WriteLine("Could not find Check in Globe, or could not successfully update BankTransaction with statementNumber");
 
-                    ex = ex.InnerException;
+                ex = ex.InnerException;
+            }
+        }
+
+        public void LogError(Exception ex)
+        {
+            string filePath = SysConfig.ConfigurationManager.AppSettings["PathToErrorLog"].ToString();
+            System.IO.FileInfo file = new System.IO.FileInfo(filePath);
+            file.Directory.Create(); // If the directory already exists, this method does nothing.
+
+            using (StreamWriter writer = new StreamWriter(filePath, true))
+            {
+                writer.WriteLine("-----------------------------------------------------------------------------");
+                writer.WriteLine("Date : " + DateTime.Now.ToString());
+                writer.WriteLine();
+
+                writer.WriteLine(ex.GetType().FullName);
+                writer.WriteLine("Message : " + ex.Message);
+
+                ex = ex.InnerException;
             }
         }
     }

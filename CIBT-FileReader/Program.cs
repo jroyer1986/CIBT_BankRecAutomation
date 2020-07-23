@@ -12,7 +12,6 @@ namespace CIBT_FileReader
 {
     class Program
     {
-        const string PathToMonitor = @"c:\Test";
         static void Main(string[] args)
         {
             CheckService checkService = new CheckService();
