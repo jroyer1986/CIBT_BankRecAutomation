@@ -168,7 +168,7 @@ namespace CIBT_FileReader.Services
 
                 writer.WriteLine("ERROR");
                 writer.WriteLine("STATEMENT NUMBER: " + check.StatementID);
-                writer.WriteLine("CHECK ID: " + check.CheckNumber + "; CHECK AMT: " + check.Amount);
+                writer.WriteLine("CHECK ID [TransactionNumber]: " + check.CheckNumber + "; CHECK AMT [AmountTC: " + check.Amount);
                 writer.WriteLine("Could not find Check in Globe, or could not successfully update BankTransaction with statementNumber");
 
                 ex = ex.InnerException;
