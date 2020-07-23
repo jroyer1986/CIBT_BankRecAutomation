@@ -65,9 +65,9 @@ namespace CIBT_FileReader.Services
             string lineString = line.TrimEnd().TrimEnd('/');
             string[] myLine = lineString.Split(',');
 
-            if(myLine[0] == "01")
+            if(myLine[0] == "02")
             {
-                statementID = Convert.ToInt32(myLine[5]);
+                statementID = Convert.ToInt32(myLine[4]);
             }
 
             if(myLine[0] == "16" && myLine[1] == "475")
