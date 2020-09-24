@@ -12,8 +12,8 @@ namespace CIBT_FileReader.Services
     public class FileService
     {
         public int statementID;
-
         CheckService _checkService;
+
        public FileService(CheckService checkService){
             _checkService = checkService;
         }
@@ -63,7 +63,26 @@ namespace CIBT_FileReader.Services
         }
         Check ConvertCheck(string line)
         {
-            /*  CHECK EACH LINE TO SEE IF ITS A CHECK (TYPE 475) */
+            List<string> typesToProcessPositive = new List<string>();
+            //typesToProcessPositive.Add("158"); --Could not find
+            typesToProcessPositive.Add("169");
+            typesToProcessPositive.Add("195");
+            typesToProcessPositive.Add("201");
+            typesToProcessPositive.Add("208");
+            typesToProcessPositive.Add("277");
+            typesToProcessPositive.Add("301");
+
+            List<string> typesToProcessNegative = new List<string>();
+            typesToProcessNegative.Add("469");
+            typesToProcessNegative.Add("475");
+            typesToProcessNegative.Add("495");
+            typesToProcessNegative.Add("506");
+            typesToProcessNegative.Add("508");
+            typesToProcessNegative.Add("577");
+            typesToProcessNegative.Add("698");
+            typesToProcessNegative.Add("699");
+
+            /*  CHECK EACH LINE TO SEE IF ITS ONE TO PROCESS (TYPES 158 169 195 201 208 277 301 469 475 495 506 508 577 698 699) */
             string lineString = line.TrimEnd().TrimEnd('/');
             string[] myLine = lineString.Split(',');
 
@@ -72,9 +91,14 @@ namespace CIBT_FileReader.Services
                 statementID = Convert.ToInt32(myLine[4]);
             }
 
-            if(myLine[0] == "16" && myLine[1] == "475")
+            if(myLine[0] == "16" && (typesToProcessPositive.Contains(myLine[1]) || typesToProcessNegative.Contains(myLine[1])))
             {
                 decimal amount = Convert.ToDecimal(myLine[2]) * .01m;
+                //add check to multiply by -1 for certain types
+                if(typesToProcessNegative.Contains(myLine[1]))
+                {
+                    amount = amount * -1;
+                }
                 string amountString = amount.ToString();
                 myLine[2] = amountString;
 
@@ -83,7 +107,7 @@ namespace CIBT_FileReader.Services
                 myCheck.StatementID = statementID;
                 myCheck.CheckNumber = myLine[5];
                 myCheck.Amount = Convert.ToDecimal(myLine[2]);
-
+                myCheck.Type = Convert.ToInt32(myLine[1]);
                 return myCheck;
             }
             else

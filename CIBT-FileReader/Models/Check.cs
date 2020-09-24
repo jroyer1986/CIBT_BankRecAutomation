@@ -16,5 +16,7 @@ namespace CIBT_FileReader.Models
         { get; set; }
         public int StatementID
         { get; set; }
+        public int Type
+        { get; set; }
     }
 }

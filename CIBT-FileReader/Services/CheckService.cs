@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -50,7 +51,7 @@ namespace CIBT_FileReader.Services
                     SqlParameter param1 = new SqlParameter();
                     param1.ParameterName = "@checkId";
                     param1.SqlDbType = SqlDbType.Int;
-                    param1.Value = check.CheckNumber;
+                    param1.Value = Convert.ToInt32(check.CheckNumber);
 
                     //add the parameter to the SqlCommand object
                     cmd.Parameters.Add(param1);
@@ -94,6 +95,9 @@ namespace CIBT_FileReader.Services
             var macolaStrEnv1 = SysConfig.ConfigurationManager.AppSettings["MACOLA_CONNECTION"].ToString();
             string connString = SysConfig.ConfigurationManager.ConnectionStrings[macolaStrEnv1].ConnectionString;
 
+            string dateString = check.StatementID.ToString();
+            DateTime date = DateTime.ParseExact(dateString, "yyMMdd", CultureInfo.InvariantCulture);
+
             try
             {
                 //sql connection object
@@ -109,7 +113,7 @@ namespace CIBT_FileReader.Services
                     SqlParameter param1 = new SqlParameter();
                     param1.ParameterName = "@checkId";
                     param1.SqlDbType = SqlDbType.Int;
-                    param1.Value = check.CheckNumber;
+                    param1.Value = Convert.ToInt32(check.CheckNumber);
 
                     //add the parameter to the SqlCommand object
                     cmd.Parameters.Add(param1);
@@ -119,6 +123,7 @@ namespace CIBT_FileReader.Services
                     param2.SqlDbType = SqlDbType.Decimal;
                     param2.Value = check.Amount;
 
+                    //add the parameter to the SqlCommand object
                     cmd.Parameters.Add(param2);
 
                     SqlParameter param3 = new SqlParameter();
@@ -128,6 +133,14 @@ namespace CIBT_FileReader.Services
 
                     //add the parameter to the SqlCommand object
                     cmd.Parameters.Add(param3);
+
+                    SqlParameter param4 = new SqlParameter();
+                    param4.ParameterName = "@statementDate";
+                    param4.SqlDbType = SqlDbType.DateTime;
+                    param4.Value = date;
+
+                    //add the parameter to the SqlCommand object
+                    cmd.Parameters.Add(param4);
 
                     //open connection
                     conn1.Open();
@@ -168,7 +181,7 @@ namespace CIBT_FileReader.Services
 
                 writer.WriteLine("ERROR");
                 writer.WriteLine("STATEMENT NUMBER: " + check.StatementID);
-                writer.WriteLine("CHECK ID [TransactionNumber]: " + check.CheckNumber + "; CHECK AMT [AmountTC: " + check.Amount);
+                writer.WriteLine("CHECK ID [TransactionNumber]: " + check.CheckNumber + "; CHECK AMT [AmountTC]: " + check.Amount + "; TYPE ID: " + check.Type);
                 writer.WriteLine("Could not find Check in Globe, or could not successfully update BankTransaction with statementNumber");
 
                 ex = ex.InnerException;
