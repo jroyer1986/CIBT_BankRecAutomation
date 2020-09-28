@@ -102,7 +102,6 @@ namespace CIBT_FileReader.Services
                 string amountString = amount.ToString();
                 myLine[2] = amountString;
 
-
                 Check myCheck = new Check();
                 myCheck.StatementID = statementID;
                 myCheck.CheckNumber = myLine[5];
